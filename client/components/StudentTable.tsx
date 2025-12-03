@@ -42,7 +42,7 @@ const StudentTable = ({ data }: { data: IStudent[] }) => {
                   <TableCell className="truncate max-w-[200px]">{item.email}</TableCell>
                   <TableCell className="truncate max-w-[120px]">{item.phone}</TableCell>
                   <TableCell className="truncate max-w-[120px]">{item.dob}</TableCell>
-                  <TableCell className="truncate max-w-20">{item.gender}</TableCell>
+                  <TableCell className="truncate max-w-20 capitalize">{item.gender}</TableCell>
                   <TableCell className="truncate max-w-[200px]">{item.address}</TableCell>
                   <TableCell>
                     <DropdownMenu>
