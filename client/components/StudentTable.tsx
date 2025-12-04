@@ -38,22 +38,36 @@ const StudentTable = ({ data }: StudentTableProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data &&data?.length ? (
+            {data && data?.length ? (
               data.map((student) => (
                 <TableRow key={student.id}>
-                  <TableCell className="truncate max-w-8 text-right">{student.id}</TableCell>
-                  <TableCell className="truncate max-w-[150px]">{student.name}</TableCell>
-                  <TableCell className="truncate max-w-[200px]">{student.email}</TableCell>
-                  <TableCell className="truncate max-w-[120px]">{student.phone}</TableCell>
-                  <TableCell className="truncate max-w-[120px]">{student.dob}</TableCell>
-                  <TableCell className="truncate max-w-20 capitalize">{student.gender}</TableCell>
-                  <TableCell className="truncate max-w-[200px]">{student.address}</TableCell>
+                  <TableCell className="truncate max-w-8 text-right">
+                    {student.id}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[150px]">
+                    {student.name}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[200px]">
+                    {student.email}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[120px]">
+                    {student.phone}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[120px]">
+                    {student.dob}
+                  </TableCell>
+                  <TableCell className="truncate max-w-20 capitalize">
+                    {student.gender}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[200px]">
+                    {student.address}
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 students-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded- overflow-hidden"
+                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 students-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded-lg overflow-hidden"
                           size="icon"
                         >
                           <EllipsisVertical />
@@ -62,7 +76,9 @@ const StudentTable = ({ data }: StudentTableProps) => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-32">
                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+                        <DropdownMenuItem variant="destructive">
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

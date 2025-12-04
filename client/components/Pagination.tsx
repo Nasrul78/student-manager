@@ -22,6 +22,7 @@ interface PaginationProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   perPage: number
   setPerPage: React.Dispatch<React.SetStateAction<number>>
+  disabled?: boolean
 }
 
 const Pagination = ({
@@ -33,6 +34,7 @@ const Pagination = ({
   setCurrentPage,
   perPage,
   setPerPage,
+  disabled,
 }: PaginationProps) => {
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2">
@@ -45,6 +47,7 @@ const Pagination = ({
           Rows per page
           <Select
             value={`${perPage}`}
+            disabled={disabled}
             onValueChange={(value) => {
               setPerPage(Number(value))
               if (perPage !== Number(value)) {
@@ -74,7 +77,7 @@ const Pagination = ({
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => setCurrentPage(1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || disabled}
           >
             <span className="sr-only">Go to first page</span>
             <ChevronsLeft />
@@ -84,7 +87,7 @@ const Pagination = ({
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || disabled}
           >
             <span className="sr-only">Go to previous page</span>
             <ChevronLeft />
@@ -94,7 +97,7 @@ const Pagination = ({
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === lastPage}
+            disabled={currentPage === lastPage || disabled}
           >
             <span className="sr-only">Go to next page</span>
             <ChevronRight />
@@ -104,7 +107,7 @@ const Pagination = ({
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => setCurrentPage(lastPage!)}
-            disabled={currentPage === lastPage}
+            disabled={currentPage === lastPage || disabled}
           >
             <span className="sr-only">Go to last page</span>
             <ChevronsRight />

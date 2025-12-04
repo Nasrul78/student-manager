@@ -5,17 +5,25 @@ import Pagination from "@/components/Pagination"
 import StudentTable from "@/components/StudentTable"
 import { IPaginatedStudents } from "@/types"
 import { useEffect, useState } from "react"
+import { Spinner } from "@/components/ui/spinner"
 
 const Home = () => {
   const [studentsData, setStudentsData] = useState<IPaginatedStudents>()
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const load = async () => {
-      const data = await getStudents(currentPage, perPage)
-
-      setStudentsData(data)
+      setLoading(true)
+      try {
+        const data = await getStudents(currentPage, perPage)
+        setStudentsData(data)
+      } catch (error) {
+        console.error("Failed to fetch students:", error)
+      } finally {
+        setLoading(false)
+      }
     }
 
     load()
@@ -25,7 +33,14 @@ const Home = () => {
     <main className="container mx-auto p-12">
       <h1 className="text-6xl font-bold mb-6">Student Dashboard</h1>
 
-      <StudentTable data={studentsData?.data} />
+      {loading ? (
+        <div className="text-center flex gap-2 justify-center items-center h-24 text-xl font-medium">
+          <Spinner className="size-6" />
+          Loading students...
+        </div>
+      ) : (
+        <StudentTable data={studentsData?.data} />
+      )}
 
       <Pagination
         from={studentsData?.from}
@@ -36,6 +51,7 @@ const Home = () => {
         setCurrentPage={setCurrentPage}
         perPage={perPage}
         setPerPage={setPerPage}
+        disabled={loading}
       />
     </main>
   )
