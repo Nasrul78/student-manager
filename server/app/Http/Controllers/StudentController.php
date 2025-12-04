@@ -11,10 +11,11 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(10);
-        
+        $perPage = $request->query('per_page', 10);
+        $students = Student::paginate($perPage);
+
         return response()->json($students);
     }
 
@@ -75,6 +76,6 @@ class StudentController extends Controller
     {
         $student->delete();
 
-        return [ 'message' => 'Student deleted successfully' ];
+        return ['message' => 'Student deleted successfully'];
     }
 }
