@@ -16,7 +16,11 @@ import { IStudent } from "@/types"
 import { EllipsisVertical } from "lucide-react"
 import { Button } from "./ui/button"
 
-const StudentTable = ({ data }: { data: IStudent[] }) => {
+interface StudentTableProps {
+  data: IStudent[]
+}
+
+const StudentTable = ({ data }: StudentTableProps) => {
   return (
     <article className="overflow-x-auto rounded-2xl border">
       <div className="min-w-[800px]">
@@ -35,21 +39,21 @@ const StudentTable = ({ data }: { data: IStudent[] }) => {
           </TableHeader>
           <TableBody>
             {data.length ? (
-              data.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="truncate max-w-8 text-right">{item.id}</TableCell>
-                  <TableCell className="truncate max-w-[150px]">{item.name}</TableCell>
-                  <TableCell className="truncate max-w-[200px]">{item.email}</TableCell>
-                  <TableCell className="truncate max-w-[120px]">{item.phone}</TableCell>
-                  <TableCell className="truncate max-w-[120px]">{item.dob}</TableCell>
-                  <TableCell className="truncate max-w-20 capitalize">{item.gender}</TableCell>
-                  <TableCell className="truncate max-w-[200px]">{item.address}</TableCell>
+              data.map((student) => (
+                <TableRow key={student.id}>
+                  <TableCell className="truncate max-w-8 text-right">{student.id}</TableCell>
+                  <TableCell className="truncate max-w-[150px]">{student.name}</TableCell>
+                  <TableCell className="truncate max-w-[200px]">{student.email}</TableCell>
+                  <TableCell className="truncate max-w-[120px]">{student.phone}</TableCell>
+                  <TableCell className="truncate max-w-[120px]">{student.dob}</TableCell>
+                  <TableCell className="truncate max-w-20 capitalize">{student.gender}</TableCell>
+                  <TableCell className="truncate max-w-[200px]">{student.address}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded- overflow-hidden"
+                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 students-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded- overflow-hidden"
                           size="icon"
                         >
                           <EllipsisVertical />
