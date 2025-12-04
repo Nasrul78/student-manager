@@ -13,7 +13,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::paginate(10);
+        $students = Student::paginate(10);
+        
+        return response()->json($students);
     }
 
     /**
