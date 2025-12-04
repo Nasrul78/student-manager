@@ -23,21 +23,21 @@ const StudentTable = ({ data }: { data: IStudent[] }) => {
         <Table className="table-auto">
           <TableHeader className="bg-muted sticky top-0 z-10">
             <TableRow>
-              <TableHead className="whitespace-nowrap">ID</TableHead>
+              <TableHead className="whitespace-nowrap text-right">ID</TableHead>
               <TableHead className="whitespace-nowrap">Name</TableHead>
               <TableHead className="whitespace-nowrap">Email</TableHead>
               <TableHead className="whitespace-nowrap">Phone</TableHead>
               <TableHead className="whitespace-nowrap">Date of Birth</TableHead>
               <TableHead className="whitespace-nowrap">Gender</TableHead>
               <TableHead className="whitespace-nowrap">Address</TableHead>
-              <TableHead className="w-16"></TableHead>
+              <TableHead className="w-12"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.length ? (
               data.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="truncate max-w-20">{item.id}</TableCell>
+                  <TableCell className="truncate max-w-8 text-right">{item.id}</TableCell>
                   <TableCell className="truncate max-w-[150px]">{item.name}</TableCell>
                   <TableCell className="truncate max-w-[200px]">{item.email}</TableCell>
                   <TableCell className="truncate max-w-[120px]">{item.phone}</TableCell>
@@ -49,7 +49,7 @@ const StudentTable = ({ data }: { data: IStudent[] }) => {
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded-lg"
+                          className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center focus:outline-none focus-visible:ring-0 focus-visible:ring-primary rounded- overflow-hidden"
                           size="icon"
                         >
                           <EllipsisVertical />
