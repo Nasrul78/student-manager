@@ -17,7 +17,7 @@ import { EllipsisVertical } from "lucide-react"
 import { Button } from "./ui/button"
 
 interface StudentTableProps {
-  data: IStudent[]
+  data: IStudent[] | undefined
 }
 
 const StudentTable = ({ data }: StudentTableProps) => {
@@ -38,7 +38,7 @@ const StudentTable = ({ data }: StudentTableProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.length ? (
+            {data &&data?.length ? (
               data.map((student) => (
                 <TableRow key={student.id}>
                   <TableCell className="truncate max-w-8 text-right">{student.id}</TableCell>

@@ -3,29 +3,40 @@
 import { getStudents } from "@/api/students"
 import Pagination from "@/components/Pagination"
 import StudentTable from "@/components/StudentTable"
-import { IStudent } from "@/types"
+import { IPaginatedStudents } from "@/types"
 import { useEffect, useState } from "react"
 
 const Home = () => {
-  const [students, setStudents] = useState<IStudent[]>([])
+  const [studentsData, setStudentsData] = useState<IPaginatedStudents>()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [perPage, setPerPage] = useState(10)
 
   useEffect(() => {
     const load = async () => {
-      const response = await getStudents()
-      const data: IStudent[] = response.map((student) => student?.data)
-      setStudents(data)
+      const data = await getStudents(currentPage, perPage)
+
+      setStudentsData(data)
     }
-    
+
     load()
-  }, [])
+  }, [currentPage, perPage])
 
   return (
     <main className="container mx-auto p-12">
       <h1 className="text-6xl font-bold mb-6">Student Dashboard</h1>
 
-      <StudentTable data={students} />
+      <StudentTable data={studentsData?.data} />
 
-      <Pagination count={students.length} />
+      <Pagination
+        from={studentsData?.from}
+        to={studentsData?.to}
+        lastPage={studentsData?.last_page}
+        total={studentsData?.total}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        perPage={perPage}
+        setPerPage={setPerPage}
+      />
     </main>
   )
 }
