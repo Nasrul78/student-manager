@@ -10,12 +10,14 @@ import { EllipsisVertical } from "lucide-react"
 interface EditDeleteDropdownProps {
     setSelectedId: () => void
     setEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setDeleteAlertOpen: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
 }
 
 const EditDeleteDropdown = ({
     setSelectedId,
     setEditModalOpen,
+    setDeleteAlertOpen,
     loading,
 }: EditDeleteDropdownProps) => {
     return (
@@ -38,7 +40,13 @@ const EditDeleteDropdown = ({
                     disabled={loading}>
                     Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem variant="destructive">
+                <DropdownMenuItem
+                    onClick={() => {
+                        setSelectedId()
+                        setDeleteAlertOpen(true)
+                    }}
+                    variant="destructive"
+                    disabled={loading}>
                     Delete
                 </DropdownMenuItem>
             </DropdownMenuContent>

@@ -18,3 +18,8 @@ export const editStudent = async (data: FormData, id: number) => {
     const res = await api.put(`/students/${id}`, data)
     return res.data
 }
+
+export const deleteStudent = async (id: number) => {
+    const res = await api.delete(`/students/${id}`)
+    return res.data
+}

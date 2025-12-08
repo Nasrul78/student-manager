@@ -1,6 +1,11 @@
 "use client"
 
-import { createStudent, editStudent, getStudents } from "@/api/students"
+import {
+    createStudent,
+    deleteStudent,
+    editStudent,
+    getStudents,
+} from "@/api/students"
 import Pagination from "@/components/Pagination"
 import StudentTable from "@/components/StudentTable"
 import { IPaginatedStudents } from "@/types"
@@ -9,6 +14,7 @@ import StudentFormModal from "@/components/StudentFormModal"
 import { toast } from "sonner"
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DeleteAlert from "@/components/DeleteAlert"
 
 const Home = () => {
     const [studentsData, setStudentsData] = useState<IPaginatedStudents>()
@@ -18,6 +24,7 @@ const Home = () => {
     const [createModalOpen, setCreateModalOpen] = useState<boolean>(false)
     const [selectedId, setSelectedId] = useState<number | null>(null)
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
+    const [deleteAlertOpen, setDeleteAlertOpen] = useState<boolean>(false)
 
     const load = useCallback(async () => {
         setLoading(true)
@@ -25,7 +32,7 @@ const Home = () => {
             const response = await getStudents(currentPage, perPage)
             setStudentsData(response)
         } catch (error: unknown) {
-            console.error("Failed to fetch students: ", error)
+            toast.error(`Failed to fetch students: ${error}`)
         } finally {
             setLoading(false)
         }
@@ -51,7 +58,7 @@ const Home = () => {
             setCreateModalOpen(false)
             toast.success("Student created successfully")
         } catch (error: unknown) {
-            console.error("Failed to create student: ", error)
+            toast.error(`Failed to create student: ${error}`)
         }
     }
 
@@ -68,13 +75,27 @@ const Home = () => {
         const formData = new FormData(e.currentTarget)
 
         try {
-            const [] = await editStudent(formData, selectedId)
+            await editStudent(formData, selectedId)
             load()
             setEditModalOpen(false)
             setSelectedId(null)
             toast.success("Student edited successfully")
         } catch (error: unknown) {
-            console.error("Failed to edit student: ", error)
+            toast.error(`Failed to edit student: ${error}`)
+        }
+    }
+
+    const handleDelete = async () => {
+        if (!selectedId) return
+
+        try {
+            await deleteStudent(selectedId)
+            load()
+            setDeleteAlertOpen(false)
+            setSelectedId(null)
+            toast.success("Student deleted successfully")
+        } catch (error: unknown) {
+            toast.error(`Failed to delete student: ${error}`)
         }
     }
 
@@ -95,6 +116,7 @@ const Home = () => {
                 data={studentsData?.data}
                 setSelectedId={setSelectedId}
                 setEditModalOpen={setEditModalOpen}
+                setDeleteAlertOpen={setDeleteAlertOpen}
                 loading={loading}
             />
 
@@ -120,6 +142,11 @@ const Home = () => {
                 handleSubmit={handleEdit}
                 open={editModalOpen}
                 setOpen={setEditModalOpen}
+            />
+            <DeleteAlert
+                action={handleDelete}
+                open={deleteAlertOpen}
+                setOpen={setDeleteAlertOpen}
             />
         </main>
     )

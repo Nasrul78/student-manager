@@ -14,6 +14,7 @@ interface StudentTableProps {
     data: IStudent[] | undefined
     setSelectedId: React.Dispatch<React.SetStateAction<number | null>>
     setEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setDeleteAlertOpen: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
 }
 
@@ -21,6 +22,7 @@ const StudentTable = ({
     data,
     setSelectedId,
     setEditModalOpen,
+    setDeleteAlertOpen,
     loading,
 }: StudentTableProps) => {
     const columns = [
@@ -85,6 +87,9 @@ const StudentTable = ({
                                                 setSelectedId(student.id)
                                             }
                                             setEditModalOpen={setEditModalOpen}
+                                            setDeleteAlertOpen={
+                                                setDeleteAlertOpen
+                                            }
                                             loading={loading}
                                         />
                                     </TableCell>
