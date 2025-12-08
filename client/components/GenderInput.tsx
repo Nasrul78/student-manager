@@ -1,0 +1,24 @@
+import { Field, FieldLabel, FieldSet } from "@/components/ui/field"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+const GenderInput = () => {
+    return (
+        <FieldSet>
+            <FieldLabel htmlFor="student-gender">Student Gender</FieldLabel>
+            <RadioGroup name="gender" id="student-gender" defaultValue="male">
+                <Field orientation="horizontal" className="w-fit gap-2">
+                    <RadioGroupItem value="male" id="student-radio-male" />
+                    <FieldLabel className="mr-2" htmlFor="student-radio-male">
+                        Male
+                    </FieldLabel>
+                    <RadioGroupItem value="female" id="student-radio-female" />
+                    <FieldLabel htmlFor="student-radio-female">
+                        Female
+                    </FieldLabel>
+                </Field>
+            </RadioGroup>
+        </FieldSet>
+    )
+}
+
+export default GenderInput
