@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/select"
 import { useEffect, useState } from "react"
 
-const DOBInput = () => {
+interface DOBInput {
+    editValue?: string
+}
+
+const DOBInput = ({ editValue }: DOBInput) => {
     const [dobDate, setDobDate] = useState("1")
     const [dobMonth, setDobMonth] = useState("January")
     const [dobYear, setDobYear] = useState("")
@@ -29,6 +33,8 @@ const DOBInput = () => {
         "November",
         "December",
     ]
+
+    const editValues = editValue?.split("-")
 
     useEffect(() => {
         if (!dobDate || !dobMonth || !dobYear) return
@@ -54,8 +60,11 @@ const DOBInput = () => {
                 <FieldLabel htmlFor="student-dob-date">Date</FieldLabel>
                 <Select
                     name="dob-date"
-                    required
-                    defaultValue="1"
+                    defaultValue={
+                        editValues?.[2] === undefined
+                            ? undefined
+                            : String(editValues?.[2])
+                    }
                     onValueChange={(value) => setDobDate(value)}>
                     <SelectTrigger id="student-dob-date">
                         <SelectValue placeholder="Date" />
@@ -73,8 +82,11 @@ const DOBInput = () => {
                 <FieldLabel htmlFor="student-dob-month">Month</FieldLabel>
                 <Select
                     name="dob-month"
-                    required
-                    defaultValue="January"
+                    defaultValue={
+                        editValues?.[1] === undefined
+                            ? undefined
+                            : months[Number(editValues?.[1]) - 1]
+                    }
                     onValueChange={(value) => setDobMonth(value)}>
                     <SelectTrigger id="student-dob-month">
                         <SelectValue placeholder="Month" />
@@ -98,6 +110,7 @@ const DOBInput = () => {
                     maxLength={4}
                     max={new Date().getFullYear()}
                     placeholder="Year"
+                    defaultValue={editValues?.[0]}
                     onChange={(e) => setDobYear(e.target.value)}
                     onInvalid={(e) => {
                         e.preventDefault()

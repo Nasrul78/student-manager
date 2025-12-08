@@ -11,6 +11,7 @@ interface TextInputProps {
     minLength?: number
     maxLength?: number
     required?: boolean
+    value?: string
 }
 
 const TextInput = ({
@@ -22,6 +23,7 @@ const TextInput = ({
     minLength,
     maxLength,
     required = false,
+    value,
 }: TextInputProps) => {
     const [error, setError] = useState("")
 
@@ -39,6 +41,7 @@ const TextInput = ({
                 minLength={minLength !== undefined ? minLength : undefined}
                 maxLength={maxLength !== undefined ? maxLength : undefined}
                 required={required}
+                defaultValue={value}
                 onInput={() => setError("")}
                 onInvalid={(e) => {
                     e.preventDefault()

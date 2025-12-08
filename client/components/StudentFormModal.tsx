@@ -1,11 +1,9 @@
-import { Plus } from "lucide-react"
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldGroup, FieldSet } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
@@ -13,26 +11,26 @@ import TextInput from "./TextInput"
 import DOBInput from "./DOBInput"
 import GenderInput from "./GenderInput"
 import AddressInput from "./AddressInput"
+import { IStudent } from "@/types"
 
 interface StudentFormModalProps {
+    data?: IStudent
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
-    disabled?: boolean
 }
 
 const StudentFormModal = ({
+    data,
     handleSubmit,
     open,
     setOpen,
-    disabled,
 }: StudentFormModalProps) => {
     const textInput = [
         {
             label: "Name",
             name: "name",
             placeholder: "eg. Jenii",
-            pattern: "^[a-zA-Z]${3,64}",
             minLength: 3,
             maxLength: 64,
             required: true,
@@ -49,24 +47,20 @@ const StudentFormModal = ({
             name: "phone",
             type: "tel",
             placeholder: "eg. 08123456789",
-            pattern: "[0-9]{10,13}",
-            minLength: 10,
-            maxLength: 13,
         },
     ]
 
+    const dataValues: Record<string, string> = {
+        name: data?.name || "",
+        email: data?.email || "",
+        phone: data?.phone || "",
+        dob: data?.dob || "",
+        gender: data?.gender || "",
+        address: data?.address || "",
+    }
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button
-                    onClick={() => setOpen(true)}
-                    disabled={disabled}
-                    variant="outline"
-                    size="sm">
-                    <Plus />
-                    <span className="hidden lg:inline">Tambah Siswa</span>
-                </Button>
-            </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Tambah Siswa</DialogTitle>
@@ -78,11 +72,15 @@ const StudentFormModal = ({
                     <FieldSet>
                         <FieldGroup>
                             {textInput.map((input) => (
-                                <TextInput key={input.name} {...input} />
+                                <TextInput
+                                    key={input.name}
+                                    {...input}
+                                    value={dataValues[input.name]}
+                                />
                             ))}
-                            <DOBInput />
-                            <GenderInput />
-                            <AddressInput />
+                            <DOBInput editValue={dataValues.dob} />
+                            <GenderInput value={dataValues.gender} />
+                            <AddressInput value={dataValues.address} />
 
                             <Field>
                                 <Button className="w-full" type="submit">

@@ -7,7 +7,11 @@ export const api = axios.create({
 api.interceptors.response.use(
     (res) => res,
     (err) => {
-        console.error("API Error: ", err.response?.data)
+        if (err.response?.status === 422) {
+            const errors = err.response.data.errors
+            console.error("Validation errors:", errors)
+        }
+
         return Promise.reject(err)
     }
 )

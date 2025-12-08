@@ -1,7 +1,11 @@
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Textarea } from "@/components/ui/textarea"
 
-const AddressInput = () => {
+interface AddressInputProps {
+    value: string
+}
+
+const AddressInput = ({ value }: AddressInputProps) => {
     return (
         <Field>
             <FieldLabel htmlFor="student-address">Student Address</FieldLabel>
@@ -9,6 +13,7 @@ const AddressInput = () => {
                 id="student-address"
                 name="address"
                 rows={3}
+                defaultValue={value}
                 placeholder="Enter student address..."
                 className="resize-none"
             />

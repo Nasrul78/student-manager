@@ -13,3 +13,8 @@ export const createStudent = async (data: FormData) => {
     const res = await api.post("/students", data)
     return res.data
 }
+
+export const editStudent = async (data: FormData, id: number) => {
+    const res = await api.put(`/students/${id}`, data)
+    return res.data
+}
