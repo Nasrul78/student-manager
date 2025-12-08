@@ -27,7 +27,7 @@ class StudentController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:64',
             'email' => 'required|email|unique:students',
-            'phone' => 'nullable|numeric',
+            'phone' => 'nullable',
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
             'address' => 'nullable|string',
@@ -58,7 +58,7 @@ class StudentController extends Controller
                 'email',
                 Rule::unique('users')->ignore($student->id),
             ],
-            'phone' => 'nullable|numeric',
+            'phone' => 'nullable',
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
             'address' => 'nullable|string',
