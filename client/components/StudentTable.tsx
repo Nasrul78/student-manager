@@ -6,104 +6,83 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { IStudent } from "@/types"
-import { EllipsisVertical } from "lucide-react"
-import { Button } from "./ui/button"
+import EditDeleteDropdown from "@/components/EditDeleteDropdown"
+import SkeletonTable from "./SkeletonTable"
 
 interface StudentTableProps {
     data: IStudent[] | undefined
+    loading: boolean
 }
 
-const StudentTable = ({ data }: StudentTableProps) => {
+const StudentTable = ({ data, loading }: StudentTableProps) => {
+    const columns = [
+        { label: "ID", className: "text-right max-w-8" },
+        { label: "Name", className: "max-w-[150px]" },
+        { label: "Email", className: "max-w-[200px]" },
+        { label: "Phone", className: "max-w-[120px]" },
+        { label: "Date of Birth", className: "max-w-[120px]" },
+        { label: "Gender", className: "max-w-20" },
+        { label: "Address", className: "max-w-[200px]" },
+        { label: "", className: "w-12" },
+    ]
+
     return (
-        <article className="overflow-x-auto rounded-2xl border">
+        <article className="overflow-hidden rounded-2xl border">
             <div className="min-w-[800px]">
                 <Table className="table-auto">
                     <TableHeader className="bg-muted sticky top-0 z-10">
                         <TableRow>
-                            <TableHead className="whitespace-nowrap text-right">
-                                ID
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Name
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Email
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Phone
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Date of Birth
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Gender
-                            </TableHead>
-                            <TableHead className="whitespace-nowrap">
-                                Address
-                            </TableHead>
-                            <TableHead className="w-12"></TableHead>
+                            {columns.map((column) => (
+                                <TableHead
+                                    key={column.label}
+                                    className={
+                                        column.className + " whitespace-nowrap"
+                                    }>
+                                    {column.label}
+                                </TableHead>
+                            ))}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data && data?.length ? (
-                            data.map((student) => (
-                                <TableRow key={student.id}>
-                                    <TableCell className="truncate max-w-8 text-right">
-                                        {student.id}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-[150px]">
-                                        {student.name}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-[200px]">
-                                        {student.email}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-[120px]">
-                                        {student.phone}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-[120px]">
-                                        {student.dob}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-20 capitalize">
-                                        {student.gender}
-                                    </TableCell>
-                                    <TableCell className="truncate max-w-[200px]">
-                                        {student.address}
-                                    </TableCell>
-                                    <TableCell>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    variant="ghost"
-                                                    className="data-[state=open]:bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-lg overflow-hidden"
-                                                    size="icon">
-                                                    <EllipsisVertical />
-                                                    <span className="sr-only">
-                                                        Open menu
-                                                    </span>
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent
-                                                align="end"
-                                                className="w-32">
-                                                <DropdownMenuItem>
-                                                    Edit
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem variant="destructive">
-                                                    Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
+                        {loading && <SkeletonTable />}
+
+                        {!loading &&
+                            data &&
+                            data.length > 0 &&
+                            data.map((student) => {
+                                const fields = [
+                                    student.id,
+                                    student.name,
+                                    student.email,
+                                    student.phone,
+                                    student.dob,
+                                    student.gender,
+                                    student.address,
+                                ]
+
+                                return (
+                                    <TableRow key={student.id}>
+                                        {fields.map((value, i) => (
+                                            <TableCell
+                                                key={i}
+                                                className={`truncate max-w-[200px] ${
+                                                    i === 0 ? "text-right" : ""
+                                                } ${
+                                                    i === 5 ? "capitalize" : ""
+                                                }`}>
+                                                {value}
+                                            </TableCell>
+                                        ))}
+
+                                        <TableCell>
+                                            <EditDeleteDropdown />
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })}
+
+                        {!loading && data && data.length === 0 && (
                             <TableRow>
                                 <TableCell
                                     colSpan={8}

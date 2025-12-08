@@ -5,7 +5,6 @@ import Pagination from "@/components/Pagination"
 import StudentTable from "@/components/StudentTable"
 import { IPaginatedStudents } from "@/types"
 import { useEffect, useState } from "react"
-import { Spinner } from "@/components/ui/spinner"
 import StudentFormModal from "@/components/StudentFormModal"
 import { toast } from "sonner"
 
@@ -65,14 +64,7 @@ const Home = () => {
                 />
             </section>
 
-            {loading ? (
-                <div className="text-center flex gap-2 justify-center items-center h-24 text-xl font-medium">
-                    <Spinner className="size-6" />
-                    Loading students...
-                </div>
-            ) : (
-                <StudentTable data={studentsData?.data} />
-            )}
+            <StudentTable data={studentsData?.data} loading={loading} />
 
             <Pagination
                 from={studentsData?.from}
